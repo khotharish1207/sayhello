@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from "react";
-import UrlParse from "url-parse";
-import { Container, Row, Col } from "react-bootstrap";
+import { Row, Toast, Button } from "react-bootstrap";
 import LoadingModal from "./components/LoadingModal";
 import StartMeet from "./components/StartMeet";
-
-// if (!roomId) {
-//   roomId = new Date().getTime();
-
-//   urlParser.query.roomId = roomId;
-//   window.history.pushState("", "", urlParser.toString());
-// }
 
 function JitsiMeetComponent() {
   const [loading, setLoading] = useState(false);
   const [startMeet, setStart] = useState(false);
+  const [showToast, setToast] = useState(false);
+
   const containerStyle = {
     width: "100%",
     height: "100vh",
@@ -44,7 +38,7 @@ function JitsiMeetComponent() {
           NATIVE_APP_NAME: `Say Hello`,
           PROVIDER_NAME: "Harish",
           INVITATION_POWERED_BY: false,
-          VERTICAL_FILMSTRIP: false,
+          VERTICAL_FILMSTRIP: true,
           ENABLE_FEEDBACK_ANIMATION: true,
           VIDEO_QUALITY_LABEL_DISABLED: true,
           SHOW_CHROME_EXTENSION_BANNER: false,
@@ -58,13 +52,10 @@ function JitsiMeetComponent() {
             "hangup",
             "profile",
             "chat",
-            // "recording",
-            // "livestreaming",
             "sharedvideo",
             "raisehand",
             "videoquality",
             "filmstrip",
-            // "invite",
             "mute-everyone",
             "security",
           ],
@@ -94,20 +85,47 @@ function JitsiMeetComponent() {
   useEffect(() => {
     // verify the JitsiMeetExternalAPI constructor is added to the global..
     if (window.JitsiMeetExternalAPI) setStart(true);
-    //startConference();
     else alert("Jitsi Meet API script not loaded");
   }, []);
 
+  const copyTextToClipboard = (text) => {
+    navigator.clipboard.writeText(window.location.href).then(
+      function () {
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 1500);
+      },
+      function (err) {
+        console.error("Async: Could not copy text: ");
+      }
+    );
+  };
+
   return (
-    <Container fluid style={containerStyle}>
+    <div fluid style={containerStyle}>
       <LoadingModal show={loading} />
       <StartMeet
         show={startMeet}
         onStart={startConference}
         onClose={() => setStart(false)}
       />
+      {!loading && !startMeet && (
+        <Row style={{ position: "absolute", margin: "10px" }}>
+          <Button
+            variant="outline-light"
+            size="sm"
+            onClick={copyTextToClipboard}
+          >
+            Copy meeting
+          </Button>
+          <Toast show={showToast}>
+            <Toast.Body>Url copied to clipboard</Toast.Body>
+          </Toast>
+        </Row>
+      )}
       <div id="jitsi-container" style={jitsiContainerStyle} />
-    </Container>
+    </div>
   );
 }
 

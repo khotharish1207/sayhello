@@ -6,17 +6,10 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-
-Object.defineProperty(navigator, 'userAgent', {
-  get: function () { return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"; }
-});
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const urlParser = new UrlParse(window.location.href, true);
 let roomId = urlParser.query.roomId;
-let displayName = urlParser.query.displayName;
-// || (cookiesManager.getUser() || {}).displayName;
 
 if (!roomId) {
   roomId = new Date().getTime();
@@ -24,8 +17,6 @@ if (!roomId) {
   urlParser.query.roomId = roomId;
   window.history.pushState("", "", urlParser.toString());
 }
-
-console.log(`urlParser-----`, urlParser);
 
 ReactDOM.render(
   <React.StrictMode>

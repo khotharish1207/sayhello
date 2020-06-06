@@ -56,7 +56,7 @@ function StartMeet({ onClose, onStart, show }) {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="primary" onClick={onStartMeet}>
-          Start Meet
+          Say Hello
         </Button>
       </Modal.Footer>
     </Modal>
