@@ -8,7 +8,7 @@ function LoadingModal({ show }) {
         <Modal.Title>Loading</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Row className="justify-content-md-center">
+        <Row className="justify-content-center">
           <Spinner animation="grow" variant="primary" />
         </Row>
       </Modal.Body>

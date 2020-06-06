@@ -9,6 +9,7 @@ import {
   ToggleButton,
 } from "react-bootstrap";
 import { setCookie, getCookie } from "../utils/coockie";
+import { trackEvent } from "../utils";
 
 const options = [
   { name: "Audio", value: 1 },
@@ -33,18 +34,16 @@ function StartMeet({ onClose, onStart, show }) {
 
     onClose();
     onStart(roomId, displayName, startAudioOnly);
-    if (window.analytics) {
-      console.log("Start Meeting");
-      window.analytics.track("Start Meeting", {
-        roomId,
-        displayName,
-      });
-    }
+
+    trackEvent("Start Meeting", {
+      roomId,
+      displayName,
+    });
   };
 
   return (
     <Modal show={show} backdrop="static" keyboard={false} centered>
-      <Modal.Header className="justify-content-md-center">
+      <Modal.Header className="justify-content-center">
         <Modal.Title>Start Meet</Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -95,7 +94,12 @@ function StartMeet({ onClose, onStart, show }) {
         </InputGroup>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={onStartMeet}>
+        <Button
+          variant="primary"
+          block
+          onClick={onStartMeet}
+          disabled={!roomId || !displayName}
+        >
           Say Hello
         </Button>
       </Modal.Footer>

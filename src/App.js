@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Toast, Button } from "react-bootstrap";
 import LoadingModal from "./components/LoadingModal";
 import StartMeet from "./components/StartMeet";
-import { detectMob } from "./utils";
+import { detectMob, identify } from "./utils";
 
 function JitsiMeetComponent() {
   const [loading, setLoading] = useState(false);
@@ -88,8 +88,10 @@ function JitsiMeetComponent() {
 
   useEffect(() => {
     // verify the JitsiMeetExternalAPI constructor is added to the global..
-    if (window.JitsiMeetExternalAPI) setStart(true);
-    else alert("Jitsi Meet API script not loaded");
+    if (window.JitsiMeetExternalAPI) {
+      setStart(true);
+      identify({ device: detectMob() ? "Mobile" : "Desktop" });
+    } else alert("Jitsi Meet API script not loaded");
   }, []);
 
   const copyTextToClipboard = (text) => {
