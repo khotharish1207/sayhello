@@ -1,13 +1,26 @@
 import React, { useState } from "react";
 import UrlParse from "url-parse";
-import { Modal, InputGroup, FormControl, Button } from "react-bootstrap";
+import {
+  Modal,
+  InputGroup,
+  FormControl,
+  Button,
+  ButtonGroup,
+  ToggleButton,
+} from "react-bootstrap";
 import { setCookie, getCookie } from "../utils/coockie";
+
+const options = [
+  { name: "Audio", value: 1 },
+  { name: "Video", value: 2 },
+];
 
 function StartMeet({ onClose, onStart, show }) {
   const urlParser = new UrlParse(window.location.href, true);
   const room = urlParser.query.roomId;
-  const [roomId, setRoom] = useState(room || "");
 
+  const [radioValue, setRadioValue] = useState(1);
+  const [roomId, setRoom] = useState(room || "");
   const [displayName, setDisplayName] = useState(
     getCookie("displayName") || "My Name"
   );
@@ -16,8 +29,10 @@ function StartMeet({ onClose, onStart, show }) {
     setCookie("displayName", displayName);
     urlParser.query.roomId = roomId;
     window.history.pushState("", "", urlParser.toString());
+    const startAudioOnly = radioValue === 1;
+
     onClose();
-    onStart(roomId, displayName);
+    onStart(roomId, displayName, startAudioOnly);
   };
 
   return (
@@ -39,7 +54,6 @@ function StartMeet({ onClose, onStart, show }) {
             aria-describedby="inputGroup-sizing-default"
           />
         </InputGroup>
-        <br />
         <InputGroup className="mb-3">
           <InputGroup.Prepend>
             <InputGroup.Text id="inputGroup-sizing-default">
@@ -52,6 +66,25 @@ function StartMeet({ onClose, onStart, show }) {
             aria-label="Default"
             aria-describedby="inputGroup-sizing-default"
           />
+        </InputGroup>
+        <InputGroup className="mb-3">
+          <ButtonGroup toggle>
+            {options.map((opt, idx) => (
+              <ToggleButton
+                key={idx}
+                type="radio"
+                variant={
+                  radioValue === opt.value ? "primary" : "outline-primary"
+                }
+                name="radio"
+                value={opt.value}
+                checked={radioValue === opt.value}
+                onChange={(e) => setRadioValue(Number(e.currentTarget.value))}
+              >
+                {opt.name}
+              </ToggleButton>
+            ))}
+          </ButtonGroup>
         </InputGroup>
       </Modal.Body>
       <Modal.Footer>

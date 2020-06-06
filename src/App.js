@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Toast, Button } from "react-bootstrap";
 import LoadingModal from "./components/LoadingModal";
 import StartMeet from "./components/StartMeet";
+import { detectMob } from "./utils";
 
 function JitsiMeetComponent() {
   const [loading, setLoading] = useState(false);
@@ -19,7 +20,7 @@ function JitsiMeetComponent() {
     height: "100%",
   };
 
-  function startConference(roomId, displayName) {
+  function startConference(roomId, displayName, startAudioOnly) {
     setLoading(true);
     try {
       // const urlParser = new UrlParse(window.location.href, true);
@@ -47,7 +48,7 @@ function JitsiMeetComponent() {
             "microphone",
             "camera",
             "closedcaptions",
-            "desktop",
+            !detectMob() && "desktop",
             "fullscreen",
             "hangup",
             "profile",
@@ -58,13 +59,16 @@ function JitsiMeetComponent() {
             "filmstrip",
             "mute-everyone",
             "security",
-          ],
+          ].filter((x) => x),
         },
         configOverwrite: {
           disableSimulcast: false,
           enableClosePage: false,
           enableWelcomePage: true,
+          enableNoAudioDetection: false,
           disableDeepLinking: true,
+          enableNoisyMicDetection: false,
+          startAudioOnly,
         },
       };
 
