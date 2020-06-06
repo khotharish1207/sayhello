@@ -33,6 +33,13 @@ function StartMeet({ onClose, onStart, show }) {
 
     onClose();
     onStart(roomId, displayName, startAudioOnly);
+    if (window.analytics) {
+      console.log("Start Meeting");
+      window.analytics.track("Start Meeting", {
+        roomId,
+        displayName,
+      });
+    }
   };
 
   return (
