@@ -103,7 +103,7 @@ function JitsiMeetComponent() {
         }, 1500);
       },
       function (err) {
-        console.error("Async: Could not copy text: ");
+        console.error("Could not copy text: ");
       }
     );
   };

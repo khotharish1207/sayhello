@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import UrlParse from "url-parse";
+import { Router, Route, Switch, Redirect } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
 import "./index.css";
 import App from "./App";
@@ -11,6 +13,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const urlParser = new UrlParse(window.location.href, true);
 let roomId = urlParser.query.roomId;
 
+const hist = createBrowserHistory();
+
 if (!roomId) {
   roomId = new Date().getTime();
 
@@ -20,7 +24,12 @@ if (!roomId) {
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router history={hist}>
+      <Switch>
+        <Route path="/" component={App} />
+        <Redirect to="/" />
+      </Switch>
+    </Router>
   </React.StrictMode>,
   document.getElementById("root")
 );

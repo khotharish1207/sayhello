@@ -9,7 +9,7 @@ import {
   ToggleButton,
 } from "react-bootstrap";
 import { setCookie, getCookie } from "../utils/coockie";
-import { trackEvent } from "../utils";
+import { trackEvent, postData } from "../utils";
 
 const options = [
   { name: "Audio", value: 1 },
@@ -23,7 +23,7 @@ function StartMeet({ onClose, onStart, show }) {
   const [radioValue, setRadioValue] = useState(1);
   const [roomId, setRoom] = useState(room || "");
   const [displayName, setDisplayName] = useState(
-    getCookie("displayName") || "My Name"
+    getCookie("displayName") || ""
   );
 
   const onStartMeet = () => {
@@ -39,6 +39,10 @@ function StartMeet({ onClose, onStart, show }) {
       roomId,
       displayName,
     });
+    postData({
+        roomId,
+        displayName,
+      })
   };
 
   return (
