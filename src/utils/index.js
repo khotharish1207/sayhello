@@ -1,3 +1,20 @@
+import * as firebase from "firebase";
+
+var firebaseConfig = {
+  apiKey: "AIzaSyBIAy4TTEd-t5UyOOpWszIwEqpFK4BawGI",
+  authDomain: "conference-67f3e.firebaseapp.com",
+  databaseURL: "https://conference-67f3e.firebaseio.com",
+  projectId: "conference-67f3e",
+  storageBucket: "conference-67f3e.appspot.com",
+  messagingSenderId: "567472190800",
+  appId: "1:567472190800:web:2dda169ab525baa1d4e855",
+  // measurementId: "G-GWN91VR3S8",
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+var db = firebase.database();
+var ref = db.ref("/conferences");
+
 function detectMob() {
   const toMatch = [
     /Android/i,
@@ -27,7 +44,12 @@ function identify(...params) {
 }
 
 async function postData(data = {}) {
-  const response = await fetch(
+  ref.push({
+    ...data,
+    timeStap: new Date().toLocaleString(),
+    device: detectMob() ? "Mobile" : "Desktop",
+  });
+  /*const response = await fetch(
     `https://mock-server-hk.herokuapp.com/sayhello`,
     {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -46,7 +68,7 @@ async function postData(data = {}) {
       }), // body data type must match "Content-Type" header
     }
   );
-  return response.json(); // parses JSON response into native JavaScript objects
+  return response.json(); // parses JSON response into native JavaScript objects*/
 }
 
 export { detectMob, trackEvent, identify, postData };
