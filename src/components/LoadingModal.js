@@ -3,7 +3,7 @@ import { Modal, Spinner, Row } from "react-bootstrap";
 
 function LoadingModal({ show }) {
   return (
-    <Modal show={show} size="sm" centered>
+    <Modal show={show} size="sm" centered backdropClassName={`backdropClassName`}>
       <Modal.Header>
         <Modal.Title>Loading</Modal.Title>
       </Modal.Header>

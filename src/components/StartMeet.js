@@ -46,14 +46,14 @@ function StartMeet({ onClose, onStart, show }) {
   };
 
   return (
-    <Modal show={show} backdrop="static" keyboard={false} centered>
+    <Modal show={show} keyboard={false} centered backdropClassName={`backdropClassName`}>
       <Modal.Header className="justify-content-center">
         <Modal.Title>Start Meet</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <InputGroup className="mb-3">
           <InputGroup.Prepend>
-            <InputGroup.Text id="inputGroup-sizing-default">
+            <InputGroup.Text  id="inputGroup-sizing-default ">
               Room Id
             </InputGroup.Text>
           </InputGroup.Prepend>
@@ -65,8 +65,8 @@ function StartMeet({ onClose, onStart, show }) {
           />
         </InputGroup>
         <InputGroup className="mb-3">
-          <InputGroup.Prepend>
-            <InputGroup.Text id="inputGroup-sizing-default">
+          <InputGroup.Prepend >
+            <InputGroup.Text  id="inputGroup-sizing-default ">
               Name
             </InputGroup.Text>
           </InputGroup.Prepend>
