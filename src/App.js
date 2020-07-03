@@ -28,22 +28,43 @@ function JitsiMeetComponent() {
       const domain = "meet.jit.si";
       const options = {
         roomName: `${roomId}`,
-        parentNode: document.getElementById("jitsi-container"),
+        parentNode: document.getElementById("conf-container"),
         interfaceConfigOverwrite: {
-          filmStripOnly: false,
-          DEFAULT_REMOTE_DISPLAY_NAME: "",
-          SHOW_JITSI_WATERMARK: false,
-          SHOW_WATERMARK_FOR_GUESTS: false,
+          DEFAULT_BACKGROUND: '#007bff',
+          DISPLAY_WELCOME_PAGE_CONTENT: false,
+          MOBILE_APP_PROMO: false,
+          PROVIDER_NAME: 'Say Hello',
           APP_NAME: `Say Hello`,
-          DISPLAY_WELCOME_PAGE_TOOLBAR_ADDITIONAL_CONTENT: false,
-          NATIVE_APP_NAME: `Say Hello`,
-          PROVIDER_NAME: "Harish",
-          INVITATION_POWERED_BY: false,
-          VERTICAL_FILMSTRIP: true,
-          ENABLE_FEEDBACK_ANIMATION: true,
-          VIDEO_QUALITY_LABEL_DISABLED: true,
+
+          SHOW_BRAND_WATERMARK: false,
           SHOW_CHROME_EXTENSION_BANNER: false,
-          HIDE_KICK_BUTTON_FOR_GUESTS: true,
+          VIDEO_QUALITY_LABEL_DISABLED: true,
+
+          SHOW_DEEP_LINKING_IMAGE: false,
+          SHOW_JITSI_WATERMARK: false,
+          SHOW_POWERED_BY: false,
+          SHOW_PROMOTIONAL_CLOSE_PAGE: false,
+          SHOW_WATERMARK_FOR_GUESTS: false,
+
+          VERTICAL_FILMSTRIP: !detectMob(),
+          JITSI_WATERMARK_LINK: window.location.href,
+          BRAND_WATERMARK_LINK: window.location.href,
+
+
+          // filmStripOnly: false,
+          // DEFAULT_REMOTE_DISPLAY_NAME: "",
+          // SHOW_JITSI_WATERMARK: false,
+          // SHOW_WATERMARK_FOR_GUESTS: false,
+          // APP_NAME: `Say Hello`,
+          // DISPLAY_WELCOME_PAGE_TOOLBAR_ADDITIONAL_CONTENT: false,
+          // NATIVE_APP_NAME: `Say Hello`,
+          // PROVIDER_NAME: "Harish",
+          // INVITATION_POWERED_BY: false,
+          // VERTICAL_FILMSTRIP: true,
+          // ENABLE_FEEDBACK_ANIMATION: true,
+          // VIDEO_QUALITY_LABEL_DISABLED: true,
+          // SHOW_CHROME_EXTENSION_BANNER: false,
+          // HIDE_KICK_BUTTON_FOR_GUESTS: true,
           TOOLBAR_BUTTONS: [
             "microphone",
             "camera",
@@ -58,17 +79,19 @@ function JitsiMeetComponent() {
             "videoquality",
             "filmstrip",
             "mute-everyone",
-            "security",
+            'tileview',
+            // "security",
           ].filter((x) => x),
         },
         configOverwrite: {
           disableSimulcast: false,
           enableClosePage: false,
-          enableWelcomePage: true,
+          enableWelcomePage: false,
           enableNoAudioDetection: false,
           disableDeepLinking: true,
           enableNoisyMicDetection: false,
-          startAudioOnly,
+
+          startWithVideoMuted: startAudioOnly
         },
       };
 
@@ -130,7 +153,7 @@ function JitsiMeetComponent() {
           </Toast>
         </Row>
       )}
-      <div id="jitsi-container" style={jitsiContainerStyle} />
+      <div id="conf-container" style={jitsiContainerStyle} />
     </div>
   );
 }
