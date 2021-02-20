@@ -50,6 +50,9 @@ function JitsiMeetComponent() {
           JITSI_WATERMARK_LINK: window.location.href,
           BRAND_WATERMARK_LINK: window.location.href,
 
+          DEFAULT_LOGO_URL: './camera.jpg',
+          DEFAULT_REMOTE_DISPLAY_NAME: 'Fellow Speaker',
+          DEFAULT_WELCOME_PAGE_LOGO_URL: './camera.jpg',
 
           // filmStripOnly: false,
           // DEFAULT_REMOTE_DISPLAY_NAME: "",
@@ -96,9 +99,12 @@ function JitsiMeetComponent() {
       };
 
       const api = new window.JitsiMeetExternalAPI(domain, options);
+      setLoading(false);
+      api.executeCommand("displayName", displayName);
+
       api.addEventListener("videoConferenceJoined", () => {
         setLoading(false);
-        api.executeCommand("displayName", displayName);
+
       });
 
       api.addEventListener("readyToClose", () => {
